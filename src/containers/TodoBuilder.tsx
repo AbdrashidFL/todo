@@ -15,13 +15,11 @@ export const TodoBuilder = observer(() =>{
     } = todoStore
     const wrapperTodoRef = useRef<HTMLDivElement | null>(null);
 
-
     const handleScroll = () => {
         const wrapper = wrapperTodoRef.current
         if (wrapper) {
             const { scrollTop, scrollHeight, clientHeight } = wrapper;
             if (scrollTop + clientHeight >= scrollHeight - 20) {
-                // Достигнут конец контейнера. Загрузите следующую порцию данных.
                 if (!loading) {
                     setLoading(true);
                     setPage();
