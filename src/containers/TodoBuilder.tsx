@@ -51,7 +51,7 @@ export const TodoBuilder = observer(() =>{
                         <h2 className="todo-header__title">Today</h2>
                         <div className="todo-header__btns">
                             <button className="todo-header__btns-add"><img src={imgPlus} alt="Add"/></button>
-                            <button className="todo-header__btns-type">2</button>
+                            <button className="todo-header__btns-type">3</button>
                         </div>
                     </div>
                     <div className="todo-wrap" ref={wrapperTodoRef}>
