@@ -8,7 +8,7 @@ export const TodoItem: FC<{data: ITodoItem}> = ({data}) =>{
             <div className="todo-item" data-id={data.id}>
                 <label className="todo-item__title">
                     <input type="checkbox" defaultChecked={data.completed}/>
-                    <p>{data.title}</p>
+                    <p>{data.title}{data.id}</p>
                 </label>
                 <div className="todo-item__date">
                     <p>{data.startDate}</p>

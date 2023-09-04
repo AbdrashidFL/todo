@@ -14,17 +14,20 @@ export const TodoBuilder = observer(() =>{
         setLoading,
         lastTodoItem
     } = todoStore
-
     const wrapperTodoRef = useRef<HTMLDivElement | null>(null);
 
     const handleScroll = useCallback(async () => {
-        const elements = document.querySelectorAll(`[data-id="${lastTodoItem}"]`);
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            if (elementTop < window.innerHeight && !loading) {
+        const element = document.querySelector(`[data-id="${lastTodoItem}"]`);
+        const wrapper = wrapperTodoRef.current
+        if(wrapper !== null && element !== null){
+            const scrollTop = wrapper.scrollTop
+            const clientHeight = wrapper.clientHeight
+            const scrollHeight = wrapper.scrollHeight
+
+            if ((scrollTop + clientHeight >= scrollHeight) && !loading) {
                 setPage()
             }
-        });
+        }
     }, [loading]);
 
 
@@ -41,7 +44,9 @@ export const TodoBuilder = observer(() =>{
     }, [handleScroll]);
 
     useEffect(() => {
-        getTodoList().then(()=>{setLoading(false)});
+        getTodoList().then(()=>{
+            setLoading(false)
+        });
     }, [page]);
     return(
         <>
