@@ -5,10 +5,10 @@ import imgAvatar from "./../assets/avatar.png"
 export const TodoItem: FC<{data: ITodoItem}> = ({data}) =>{
     return(
         <>
-            <div className="todo-item" data-id={data.id}>
+            <div className="todo-item">
                 <label className="todo-item__title">
                     <input type="checkbox" defaultChecked={data.completed}/>
-                    <p>{data.title}{data.id}</p>
+                    <p>{data.title}</p>
                 </label>
                 <div className="todo-item__date">
                     <p>{data.startDate}</p>

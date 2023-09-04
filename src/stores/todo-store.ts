@@ -9,12 +9,8 @@ class Todo {
     listTodo: ITodoItem[] = [];
     page: number = 1;
     loading: boolean = false;
-    lastTodoItem: number | null = null;
     constructor() {
         makeAutoObservable(this)
-    }
-    setLastTodoItem = (value: number) => {
-        this.lastTodoItem = value
     }
     setLoading = (value: boolean) =>{
         this.loading = value
@@ -49,14 +45,13 @@ class Todo {
                         };
                         return todoItem;
                     })
-                    this.setLastTodoItem(newData[newData.length-1].id)
                     this.listTodo = this.listTodo.concat(newData)
                 }
             }else{
                 throw new Error('Error get todo list')
             }
         }catch (e){
-            alert(e)
+            console.log(e)
         }
     }
 }

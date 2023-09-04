@@ -1,6 +1,6 @@
 import todoStore from "../stores/todo-store.ts";
 import {observer} from "mobx-react-lite";
-import {useCallback, useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import {TodoItem} from "../components/TodoItem.tsx";
 import imgPlus from "./../assets/add.svg"
 
@@ -12,24 +12,23 @@ export const TodoBuilder = observer(() =>{
         page,
         loading,
         setLoading,
-        lastTodoItem
     } = todoStore
     const wrapperTodoRef = useRef<HTMLDivElement | null>(null);
 
-    const handleScroll = useCallback(async () => {
-        const element = document.querySelector(`[data-id="${lastTodoItem}"]`);
-        const wrapper = wrapperTodoRef.current
-        if(wrapper !== null && element !== null){
-            const scrollTop = wrapper.scrollTop
-            const clientHeight = wrapper.clientHeight
-            const scrollHeight = wrapper.scrollHeight
 
-            if ((scrollTop + clientHeight >= scrollHeight) && !loading) {
-                setPage()
+    const handleScroll = () => {
+        const wrapper = wrapperTodoRef.current
+        if (wrapper) {
+            const { scrollTop, scrollHeight, clientHeight } = wrapper;
+            if (scrollTop + clientHeight >= scrollHeight - 20) {
+                // Достигнут конец контейнера. Загрузите следующую порцию данных.
+                if (!loading) {
+                    setLoading(true);
+                    setPage();
+                }
             }
         }
-    }, [loading]);
-
+    };
 
     useEffect(() => {
         const wrapper = wrapperTodoRef.current;
@@ -41,7 +40,7 @@ export const TodoBuilder = observer(() =>{
                 wrapper.removeEventListener('scroll', handleScroll);
             }
         };
-    }, [handleScroll]);
+    }, []);
 
     useEffect(() => {
         getTodoList().then(()=>{
