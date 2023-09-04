@@ -21,7 +21,6 @@ export const TodoBuilder = observer(() =>{
             const { scrollTop, scrollHeight, clientHeight } = wrapper;
             if (scrollTop + clientHeight >= scrollHeight - 20) {
                 if (!loading) {
-                    setLoading(true);
                     setPage();
                 }
             }
