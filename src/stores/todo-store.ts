@@ -20,10 +20,10 @@ class Todo {
     }
     getTodoList = async () =>{
         try {
+            this.setLoading(true)
             const {data, status}: {data: IResponseTodoItem[], status: number} = await instance.get(`?_page=${this.page}`); //?_limit=5&_pages=1
             if(status === 200){
                 if(data.length !== 0){
-                    this.setLoading(true)
                     const random = (max: number, min: number) =>{
                         return Math.floor(Math.random() * (max - min) + min)
                     }
@@ -46,7 +46,6 @@ class Todo {
                         return todoItem;
                     })
                     this.listTodo = this.listTodo.concat(newData)
-                    this.setLoading(false)
                 }
             }else{
                 throw new Error('Error get todo list')

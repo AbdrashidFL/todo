@@ -10,19 +10,24 @@ export const TodoBuilder = observer(() =>{
         getTodoList,
         setPage,
         page,
-        loading
+        loading,
+        setLoading
     } = todoStore
 
     const wrapperTodoRef = useRef<HTMLDivElement | null>(null);
 
-    const handleScroll = useCallback(() => {
+    const handleScroll = useCallback(async () => {
         const wrapper = wrapperTodoRef.current;
         if(wrapper !== null){
-            if((wrapper.scrollHeight - wrapper.scrollTop === wrapper.clientHeight) && !loading){
-                setPage();
+            const scrollTop = wrapper.scrollTop
+            const clientHeight = wrapper.clientHeight
+            const scrollHeight = wrapper.scrollHeight
+            if((scrollTop + clientHeight >= scrollHeight)){
+                setPage()
             }
         }
     }, [loading]);
+
 
     useEffect(() => {
         const wrapper = wrapperTodoRef.current;
@@ -37,7 +42,7 @@ export const TodoBuilder = observer(() =>{
     }, [handleScroll]);
 
     useEffect(() => {
-        void getTodoList();
+        getTodoList().then(()=>{setLoading(false)});
     }, [page]);
     return(
         <>
