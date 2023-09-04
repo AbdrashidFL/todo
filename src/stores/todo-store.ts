@@ -7,7 +7,7 @@ import {faker} from "@faker-js/faker";
 
 class Todo {
     listTodo: ITodoItem[] = [];
-    page: number = 1;
+    page: number = 19;
     loading: boolean = false;
     lastTodoItem: number | null = null;
     constructor() {
@@ -24,10 +24,10 @@ class Todo {
     }
     getTodoList = async () =>{
         try {
-            this.setLoading(true)
             const {data, status}: {data: IResponseTodoItem[], status: number} = await instance.get(`?_page=${this.page}`); //?_limit=5&_pages=1
             if(status === 200){
                 if(data.length !== 0){
+                    this.setLoading(true)
                     const random = (max: number, min: number) =>{
                         return Math.floor(Math.random() * (max - min) + min)
                     }
