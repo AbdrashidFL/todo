@@ -51,7 +51,7 @@ class Todo {
                 throw new Error('Error get todo list')
             }
         }catch (e){
-            console.log(e)
+            alert(e)
         }
     }
 }
