@@ -7,7 +7,7 @@ import {faker} from "@faker-js/faker";
 
 class Todo {
     listTodo: ITodoItem[] = [];
-    page: number = 19;
+    page: number = 1;
     loading: boolean = false;
     lastTodoItem: number | null = null;
     constructor() {
