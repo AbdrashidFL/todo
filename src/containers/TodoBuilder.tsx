@@ -11,21 +11,20 @@ export const TodoBuilder = observer(() =>{
         setPage,
         page,
         loading,
-        setLoading
+        setLoading,
+        lastTodoItem
     } = todoStore
 
     const wrapperTodoRef = useRef<HTMLDivElement | null>(null);
 
     const handleScroll = useCallback(async () => {
-        const wrapper = wrapperTodoRef.current;
-        if(wrapper !== null){
-            const scrollTop = wrapper.scrollTop
-            const clientHeight = wrapper.clientHeight
-            const scrollHeight = wrapper.scrollHeight
-            if((scrollTop + clientHeight >= scrollHeight)){
+        const elements = document.querySelectorAll(`[data-id="${lastTodoItem}"]`);
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < window.innerHeight && !loading) {
                 setPage()
             }
-        }
+        });
     }, [loading]);
 
 
